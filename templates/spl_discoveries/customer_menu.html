@@ -1,0 +1,72 @@
+<div class="menu app-menu">
+
+  <div class="menu object-menu">
+
+    {% if perms.view_customer %}
+      {% if 'customer-list' == request.resolver_match.url_name %}
+        <div class="menu-customer menu-list menu-here">
+            List
+        </div>
+      {% else %}
+        <div class="menu-customer menu-list">
+          <a href="{% url 'spl_discoveries:customer-list' %}">List</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if perms.view_customer %}
+      {% if 'customer-detail' == request.resolver_match.url_name %}
+        <div class="menu-customer menu-detail menu-here">
+            View
+        </div>
+      {% elif object.pk %}
+        <div class="menu-customer menu-detail">
+          <a href="{% url 'spl_discoveries:customer-detail' object.pk %}">View</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if perms.add_customer %}
+      {% if 'customer-create' == request.resolver_match.url_name %}
+        <div class="menu-customer menu-here menu-create">
+          <button form="form_customer" class="menu-customer" type="submit" >Submit</button></form>
+        </div>
+      {% else %}
+        <div class="menu-customer menu-create">
+          <a href="{% url 'spl_discoveries:customer-create' %}">Add</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if perms.change_customer %}
+      {% if 'customer-update' == request.resolver_match.url_name %}
+        <div class="menu-customer menu-update menu-here">
+          <button type="submit" form="form_customer" class="menu-customer menu-here" >Submit Changes</button>
+        </div>
+      {% elif object.pk %}
+        <div class="menu-customer menu-update">
+          <a href="{% url 'spl_discoveries:customer-update' object.pk %}">Edit</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if perms.delete_customer %}
+      {% if 'customer-delete' == request.resolver_match.url_name %}
+        <div class="menu-customer menu-delete menu-here">
+          <form method="POST" action="{% url 'spl_discoveries:customer-delete' object.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="menu-customer" >Confirm Delete</button>
+          </form>
+        </div>
+      {% elif object.pk %}
+        <div class="menu-customer menu-delete">
+          <a href="{% url 'spl_discoveries:customer-delete' object.pk %}">Delete</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+
+  </div>
+
+
+</div>

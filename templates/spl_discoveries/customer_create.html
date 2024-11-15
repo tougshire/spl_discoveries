@@ -1,0 +1,14 @@
+{% extends './_form.html' %}
+
+{% block content %}
+  {% include './customer_menu.html' %}
+  <h2>Customer</h2>
+  {% include './customer_form.html' %}
+  {% include './customer_menu.html' %}
+
+{% endblock %}
+{% block bottomscript %}
+{{ block.super }}
+{% endblock %}
+
+

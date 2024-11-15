@@ -1,0 +1,15 @@
+<div class="menu app-menu">
+
+  {% if perms.spl_discoveries.view_appointment %}
+    {% if 'appointment-' in request.resolver_match.url_name %}
+      <div class="menu-appointment menu-here">
+        <a href="{% url 'spl_discoveries:appointment-list' %}">Appointments</a>
+      </div>
+    {% else %}
+      <div class="menu-appointment">
+        <a href="{% url 'spl_discoveries:appointment-list' %}">Appointments</a>
+      </div>
+    {% endif %}
+  {% endif %}
+
+</div>

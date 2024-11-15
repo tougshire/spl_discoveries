@@ -1,0 +1,14 @@
+{% extends './_form.html' %}
+
+{% block content %}
+  {% include './staffmember_menu.html' %}
+  <h2>Staff Member</h2>
+  {% include './staffmember_form.html' %}
+  {% include './staffmember_menu.html' %}
+
+{% endblock %}
+{% block bottomscript %}
+{{ block.super }}
+{% endblock %}
+
+

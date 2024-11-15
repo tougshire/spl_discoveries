@@ -1,0 +1,24 @@
+
+<div class="form">
+  {{ form.errors }}
+  <form id="form_staffmember" method="POST">
+  {{ form.media }}
+    {% csrf_token %}
+
+      <div id="div_name_full">
+        {% include 'touglates/form_field.html' with field=form.name_full %}
+      </div>
+      <div id="div_name_prefered">
+        {% include 'touglates/form_field.html' with field=form.name_prefered %}
+      </div>
+      <div id="div_email">
+        {% include 'touglates/form_field.html' with field=form.email %}
+      </div>
+      <div id="div_phone">
+        {% include 'touglates/form_field.html' with field=form.phone %}
+      </div>
+      {% include 'touglates/form_field.html' with label_tag="Submit" field="<button type='submit'>Submit</button>" %}
+
+
+
+

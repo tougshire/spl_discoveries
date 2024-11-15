@@ -1,0 +1,115 @@
+{% extends './_form.html' %}
+{% block content %}
+  {{ form.errors }}
+  <form id="form_customer" method="POST">
+    <input type="hidden" name='opener' id="input_opener">
+    <div class="form">
+      {% csrf_token %}
+      {% for field in form.hidden_fields %}
+        {{ field }}
+      {% endfor %}
+      {% for field in form.visible_fields%}
+      <div class="field-wrapper">
+        {% if field.errors %}
+          <div class="errors">
+            {{ field.errors }}
+          </div>
+        {% endif %}
+        <div class="control">
+          <div class="label">
+            {{ field.label_tag }}
+          </div>
+          <div class="field">
+            {{ field }}
+          </div>
+        </div>
+        <div class="help_text">
+          {{ field.help_text}}
+        </div>
+      </div>
+    {% endfor %}
+      <div class="formsetaccessory formsetaccessory--titlediv">
+        <div><h3 id="h3_customernotes" class="formsetaccessory__titleel">Notes</h3></div>
+        <div><button type="button" id="button_addcustomernote" class="formsetaccessory__button js_vmargins" data-vmarginsource="h3_customernotes">Add Note</button></div>
+      </div>
+
+      {{ customernotes.management_form }}
+      {% if customernotes.errors %}{{ customernotes.errors }}{% endif %}
+      {% for customernoteform in customernotes.forms %}
+        {% if customernoteform.errors %}{{ customernoteform.errors }}{% endif %}
+        {% if customernoteform.id.value  %}
+          <div id="div_customernoteform_{{ customernoteform.id.value }}" class="customernoteformsetform"  >
+            {% for hiddenfield in customernoteform.hidden_fields %}
+              {{ hiddenfield }}
+            {% endfor %}
+            {% include 'touglates/form_field.html' with field=customernoteform.when %}
+            {% include 'touglates/form_field.html' with field=customernoteform.content %}
+            {% include 'touglates/form_field.html' with field=customernoteform.DELETE %}
+          </div>
+        {% else %}
+          <div class="customernoteformsetform customernotenewform" >
+            {% for hiddenfield in customernoteform.hidden_fields %}
+              {{ hiddenfield }}
+            {% endfor %}
+            {% include 'touglates/form_field.html' with field=customernoteform.when %}
+            {% include 'touglates/form_field.html' with field=customernoteform.content %}
+            {% include 'touglates/form_field.html' with field=customernoteform.DELETE %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      <table>
+        {% for customernote in object.customernote_set.all %}
+          <tr id="tr_customernote_{{ customernote.id }}">
+            <td><button type="button" id="button_editcustomernote_{{ customernote.id }}" data-formid="div_customernoteform_{{ customernote.id }}" data-displayid="tr_customernote_{{ customernote.id }}" class="customernote_edit_button">edit</button></td><td>{{ customernote.when }}</td><td>{{ customernote.content }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+
+
+      <button type="Submit">Submit</button>
+
+    </div>
+
+  </form>
+  <script>
+    if(window.opener) {
+      document.getElementById('input_opener').value = window.opener.location.href
+    }
+  </script>
+  {% endblock %}
+  {% block bottomscript %}
+  {{ block.super }}
+  <script>
+
+
+    function enableRelatedFormsets(formsetClasses, editButtonClasses, newFormClass, addButtonIds) {
+      formsetClassList = formsetClasses.split(",")
+      editButtonClassList = editButtonClasses.split(",")
+      addButtonIdList = addButtonIds.split(",")
+      if(!(formsetClassList.length == editButtonClassList.length == addButtonIdList.length)) {
+          return;
+      }
+      for(i=0; i < formsetClassList.length; i++) {
+        let editButtons = document.getElementsByClassName(editButtonClassList[i])
+        for( editButton of editButtons){
+          editButton.addEventListener('click', function(e){
+          e.preventDefault()
+          enableFormsetForm(e.target.dataset.formid, e.target.dataset.displayid)
+          })
+        }
+
+        document.getElementById(addButtonIdList[i]).addEventListener('click', function(e){
+          e.preventDefault()
+          enableAddFormsetForm(newFormClass)
+        })
+        let formsetforms = document.getElementsByClassName(formsetClassList[i])
+        for( formsetform of formsetforms ){
+          formsetform.style.display="none"
+        }
+      }
+    }
+    enableRelatedFormsets("customernoteformsetform","customernote_edit_button","customernotenewform", "button_addcustomernote")
+  </script> -->
+{% endblock %}
+
+

@@ -1,0 +1,18 @@
+<div class="detail">
+  {% include 'touglates/detail_field.html' with label=customer_labels.where_scheduled field=object.where_scheduled %}
+  {% include 'touglates/detail_field.html' with label=customer_labels.where_scheduleds_request field=object.where_scheduleds_request %}
+  {% include 'touglates/detail_field.html' with label=customer_labels.when_submitted field=object.when_submitted %}
+  {% include 'touglates/detail_field.html' with label=customer_labels.staffer field=object.staffer %}
+  {% include 'touglates/detail_field.html' with label=customer_labels.when_started field=object.when_started %}
+  {% include 'touglates/detail_field.html' with label=customer_labels.where_scheduled field=object.where_scheduled %}
+  {% include 'touglates/detail_field.html' with label=customer_labels.status field=object.status %}
+
+  <h3>Notes</h3><span id="div_customerNotes">Showing All </span><a href="#" id="a_toggleNotes">Show Flagged</a>
+  {% for customernote in object.customernote_set.all %}
+    <div class="relatedset relatedcustomernote level{{ customerNote.customernotelevel }} {% if customernote.flagged %} flagged{% endif %}" id="div_customernote-{{ forloop.counter0 }}">
+      {% include 'touglates/list_fields.html' with field_1_label='Note:' field_1=customernote.when field_2=customernote.customernotecategory|default_if_none:'' field_3=customernote.maintext %}
+    </div>
+  {% endfor %}
+
+</div>
+

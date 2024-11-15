@@ -1,0 +1,105 @@
+<div class="form">
+  {{ form.errors }}
+  {{ appointmentnotes.errors }}
+  {% for message in messages %} {{ message }} {% endfor %}
+  <form id="form_appointment" method="POST">
+  {{ form.media }}
+    {% csrf_token %}
+
+      <div id="title">
+        {% include 'touglates/form_field.html' with field=form.title %}
+     </div>
+      <div id="div_customer">
+        {% include 'touglates/form_field.html' with field=form.customer %}
+      </div>
+      <div id="div_request_summary">
+        {% include 'touglates/form_field.html' with field=form.request_summary %}
+      </div>
+      <div id="div_customers_availability">
+        {% include 'touglates/form_field.html' with field=form.customers_availability %}
+      </div>
+
+      <div id="div_when_submitted">
+        {% include 'touglates/form_field.html' with field=form.when_submitted %}
+      </div>
+      <div id="div_staffer">
+        {% include 'touglates/form_field.html' with field=form.staffer %}
+      </div>
+      <div id="div_when_scheduled">
+        {% include 'touglates/form_field.html' with field=form.when_scheduled %}
+      </div>
+      <div id="div_where_scheduled">
+        {% include 'touglates/form_field.html' with field=form.where_scheduled %}
+      </div>
+      <div id="div_when_completed">
+        {% include 'touglates/form_field.html' with field=form.when_completed %}
+      </div>
+      <div id="div_status">
+        {% include 'touglates/form_field.html' with field=form.status %}
+      </div>
+
+      <div class="formsetaccessory formsetaccessory--titlediv">
+        <div><h3 id="h3_appointmentnotes" class="formsetaccessory__titleel">Notes</h3></div>
+        <div><button type="button" id="button_addappointmentnote" class="formsetaccessory__button js_vmargins" data-vmarginsource="h3_customernotes">Add Note</button></div>
+      </div>
+
+      {{ appointmentnotes.management_form }}
+      {% if appointmentnotes.errors %}{{ appointmentnotes.errors }}{% endif %}
+      {% for appointmentnoteform in appointmentnotes.forms %}
+        {% if appointmentnoteform.errors %}{{ appointmentnoteform.errors }}{% endif %}
+        {% if appointmentnoteform.id.value  %}
+          <div id="div_appointmentnoteform_{{ appointmentnoteform.id.value }}" class="appointmentnoteformsetform"  >
+            {% for hiddenfield in appointmentnoteform.hidden_fields %}
+              {{ hiddenfield }}
+            {% endfor %}
+            {% include 'touglates/form_field.html' with field=appointmentnoteform.when %}
+            {% include 'touglates/form_field.html' with field=appointmentnoteform.content %}
+            {% include 'touglates/form_field.html' with field=appointmentnoteform.DELETE %}
+          </div>
+        {% else %}
+          <div class="appointmentnoteformsetform appointmentnotenewform" >
+            {% for hiddenfield in appointmentnoteform.hidden_fields %}
+              {{ hiddenfield }}
+            {% endfor %}
+            {% include 'touglates/form_field.html' with field=appointmentnoteform.when %}
+            {% include 'touglates/form_field.html' with field=appointmentnoteform.content %}
+            {% include 'touglates/form_field.html' with field=appointmentnoteform.DELETE %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      <table>
+        {% for appointmentnote in object.appointmentnote_set.all %}
+          <tr id="tr_appointmentnote_{{ appointmentnote.id }}">
+            <td><button type="button" id="button_editappointmentnote_{{ appointmentnote.id }}" data-formid="div_appointmentnoteform_{{ appointmentnote.id }}" data-displayid="tr_appointmentnote_{{ appointmentnote.id }}" class="appointmentnote_edit_button">edit</button></td><td>{{ appointmentnote.when }}</td><td>{{ appointmentnote.content }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+
+
+      <button type="Submit">Submit</button>
+
+    </div>
+
+  </form>
+
+  <script>
+    let appointmentnoteEditButtons = document.getElementsByClassName('appointmentnote_edit_button')
+    for( appointmentnoteEditButton of appointmentnoteEditButtons){
+      appointmentnoteEditButton.addEventListener('click', function(e){
+        e.preventDefault()
+        enableFormsetForm(e.target.dataset.formid, e.target.dataset.displayid)
+      })
+    }
+    let appointmentnoteforms = document.getElementsByClassName("appointmentnoteformsetform")
+    for( appointmentnoteform of appointmentnoteforms ){
+      appointmentnoteform.style.display="none"
+    }
+    document.getElementById('button_addappointmentnote').addEventListener('click', function(e){
+      e.preventDefault()
+      enableAddFormsetForm('appointmentnotenewform')
+    })
+  </script>
+
+
+
+

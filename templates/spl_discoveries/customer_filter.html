@@ -1,0 +1,193 @@
+{% extends './_base.html' %}
+{% load static %}
+{% block content %}
+{% include './customer_menu.html' %}
+
+<div id = "div_search_form">
+  <table>
+    <form method="POST">
+      {% csrf_token %}
+      {{ filter.form.as_table }}
+      {{ as_csv.as_table }}
+      {{ filterstore_save.as_table }}
+      <tr><td> </td><td><input type="submit" /></td></tr>
+    </form>
+    <form method="GET" action="{% url 'spl_discoveries:customer-list' %}">
+      {{ filterstore_retrieve.as_table }}
+      <tr><td> </td><td><input type="submit" /></td></tr>
+    </form>
+  </table>
+</div>
+<div>
+  <a id="a_showhideSearchForm" href="#"></a>
+</div>
+<script>
+  function showhideSearchForm() {
+    var div_searchForm = document.getElementById("div_search_form")
+    if(div_searchForm.style.display=="none") {
+      div_searchForm.style.display="block"
+      a_showhideSearchForm.innerText="Hide Search Form"
+    } else {
+      div_searchForm.style.display="none"
+      a_showhideSearchForm.innerText="Show Search Form"
+    }
+  }
+  var a_showhideSearchForm = document.getElementById("a_showhideSearchForm")
+  a_showhideSearchForm.addEventListener("click", function(e) {
+    e.preventDefault()
+    showhideSearchForm()
+  })
+  showhideSearchForm()
+</script>
+<div class="list">
+    <div><a href="{% url 'spl_discoveries:customer-create' %}">create</a></div>
+      <div class="row rowhead">
+        {% include 'touglates/list_head.html' with field='' %}
+        {% if 'common_name' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.common_name %}
+        {% endif %}
+        {% if 'mmodel' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.mmodel %}
+        {% endif %}
+        {% if 'primary_id' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.primary_id %}
+        {% endif %}
+        {% if 'serial_number' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.serial_number %}
+        {% endif %}
+        {% if 'bios_serial_number' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.bios_serial_number %}
+        {% endif %}
+        {% if 'asset_number' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.asset_number %}
+        {% endif %}
+        {% if 'name_prefered' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.name_prefered %}
+        {% endif %}
+        {% if 'network_name' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.network_name %}
+        {% endif %}
+        {% if 'phone_number' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.phone_number %}
+        {% endif %}
+        {% if 'mobile_id' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.mobile_id %}
+        {% endif %}
+        {% if 'sim_iccid' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.sim_iccid %}
+        {% endif %}
+
+        {% if 'role' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.role %}
+        {% endif %}
+        {% if 'connected_to' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.connected_to %}
+        {% endif %}
+        {% if 'status' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.status %}
+        {% endif %}
+        {% if 'home' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.home %}
+        {% endif %}
+        {% if 'location' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.location %}
+        {% endif %}
+        {% if 'assignee' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.assignee %}
+        {% endif %}
+        {% if 'borrower' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.borrower %}
+        {% endif %}
+        {% if 'owner' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.owner %}
+        {% endif %}
+        {% if 'latest_inventory' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.latest_inventory %}
+        {% endif %}
+        {% if 'installation_date' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=labels.installation_date %}
+        {% endif %}
+
+      </div>
+
+      {% for customer in filter.qs %}
+        <div class="row">
+          <div class="listfield"><a href="{% url 'spl_discoveries:customer-detail' customer.pk %}">view</a></div>
+          <div class="listfield"><a href="{% url 'spl_discoveries:customer-update' customer.pk %}">edit</a></div>
+          {% if 'common_name' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.common_name %}
+          {% endif %}
+          {% if 'mmodel' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.mmodel %}
+          {% endif %}
+          {% if 'primary_id' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.primary_id %}
+          {% endif %}
+          {% if 'serial_number' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.serial_number %}
+          {% endif %}
+          {% if 'bios_serial_number' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.bios_serial_number %}
+          {% endif %}
+          {% if 'asset_number' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.asset_number %}
+          {% endif %}
+          {% if 'name_prefered' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.name_prefered %}
+          {% endif %}
+          {% if 'network_name' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.network_name %}
+          {% endif %}
+          {% if 'phone_number' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.phone_number %}
+          {% endif %}
+          {% if 'mobile_id' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.mobile_id %}
+          {% endif %}
+          {% if 'sim_iccid' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.sim_iccid %}
+          {% endif %}
+
+          {% if 'role' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.role %}
+          {% endif %}
+          {% if 'connected_to' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.connected_to %}
+          {% endif %}
+          {% if 'status' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.status %}
+          {% endif %}
+          {% if 'home' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.home.short_name %}
+          {% endif %}
+          {% if 'location' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.location.short_name %}
+          {% endif %}
+          {% if 'assignee' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.assignee.friendly_name %}
+          {% endif %}
+          {% if 'borrower' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.borrower.friendly_name %}
+          {% endif %}
+          {% if 'owner' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.owner.friendly_name %}
+          {% endif %}
+          {% if 'latest_inventory' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.latest_inventory %}
+          {% endif %}
+          {% if 'installation_date' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=customer.installation_date %}
+          {% endif %}
+
+        </div>
+      {% endfor %}
+      <div>Count: {{ count }}</div>
+
+    </div>
+  </div>
+  {% include './customer_menu.html' %}
+  {% endblock %}
+  {% block bottomscript %}
+    {{ block.super }}
+
+  {% endblock %}
