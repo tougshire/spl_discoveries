@@ -1,0 +1,72 @@
+<div class="menu app-menu">
+
+  <div class="menu object-menu">
+
+    {% if perms.view_inquiry %}
+      {% if 'inquiry-list' == request.resolver_match.url_name %}
+        <div class="menu-inquiry menu-list menu-here">
+            List
+        </div>
+      {% else %}
+        <div class="menu-inquiry menu-list">
+          <a href="{% url 'spl_discoveries:inquiry-list' %}">List</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if perms.view_inquiry %}
+      {% if 'inquiry-detail' == request.resolver_match.url_name %}
+        <div class="menu-inquiry menu-detail menu-here">
+            View
+        </div>
+      {% elif object.pk %}
+        <div class="menu-inquiry menu-detail">
+          <a href="{% url 'spl_discoveries:inquiry-detail' object.pk %}">View</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if perms.add_inquiry %}
+      {% if 'inquiry-create' == request.resolver_match.url_name %}
+        <div class="menu-inquiry menu-here menu-create">
+          <button form="form_inquiry" class="menu-inquiry" type="submit" >Submit</button></form>
+        </div>
+      {% else %}
+        <div class="menu-inquiry menu-create">
+          <a href="{% url 'spl_discoveries:inquiry-create' %}">Add</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if perms.change_inquiry %}
+      {% if 'inquiry-update' == request.resolver_match.url_name %}
+        <div class="menu-inquiry menu-update menu-here">
+          <button type="submit" form="form_inquiry" class="menu-inquiry menu-here" >Submit Changes</button>
+        </div>
+      {% elif object.pk %}
+        <div class="menu-inquiry menu-update">
+          <a href="{% url 'spl_discoveries:inquiry-update' object.pk %}">Edit</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if perms.delete_inquiry %}
+      {% if 'inquiry-delete' == request.resolver_match.url_name %}
+        <div class="menu-inquiry menu-delete menu-here">
+          <form method="POST" action="{% url 'spl_discoveries:inquiry-delete' object.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="menu-inquiry" >Confirm Delete</button>
+          </form>
+        </div>
+      {% elif object.pk %}
+        <div class="menu-inquiry menu-delete">
+          <a href="{% url 'spl_discoveries:inquiry-delete' object.pk %}">Delete</a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+
+  </div>
+
+
+</div>

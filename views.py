@@ -20,16 +20,17 @@ from django_filters_stoex.views import FilterView
 from spl_members.models import Member as Staffmember
 from touglates.views import make_labels
 
-from .filterset import AppointmentFilter, CustomerFilter
+from .filterset import AppointmentFilter, CustomerFilter, InquiryFilter
 from .forms import (
     AppointmentAppointmentnoteFormset,
     AppointmentForm,
     CustomerCustomernoteFormset,
     CustomerForm,
     LocationForm,
+    InquiryForm,
     StaffmemberForm,
 )
-from .models import Appointment, Appointmentnote, Customer, Location
+from .models import Appointment, Appointmentnote, Customer, Inquiry, Location
 
 logger = logging.getLogger(__name__)
 
@@ -585,3 +586,111 @@ class StaffmemberDetail(PermissionRequiredMixin, DetailView):
         context_data["staffmember_labels"] = make_labels(Staffmember)
 
         return context_data
+
+class InquiryCreate(PermissionRequiredMixin, CreateView):
+    permission_required = "spl_discoveries.add_inquiry"
+    model = Inquiry
+    form_class = InquiryForm
+    template_name = "spl_discoveries/inquiry_create.html"
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        context_data["inquiry_labels"] = make_labels(Inquiry)
+
+        return context_data
+
+    def get_success_url(self):
+
+        if "popup" in self.request.get_full_path():
+            return reverse(
+                "touglates:popup_closer",
+                kwargs={
+                    "pk": self.object.pk,
+                    "app_name": self.model._meta.app_label,
+                    "model_name": self.model.__name__,
+                },
+            )
+        return reverse_lazy(
+            "spl_discoveries:inquiry-detail", kwargs={"pk": self.object.pk}
+        )
+
+    # def form_valid(self, form):
+    #     if form.cleaned_data["honeypot"] > "":
+    #         messages.add_message(self.request,messages.WARNING,"Are you human?")
+    #         return super().form_invalid(form)
+    #     return super().form_valid(form)
+
+class InquiryUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = "spl_discoveries.change_inquiry"
+    model = Inquiry
+    form_class = InquiryForm
+    template_name = "spl_discoveries/inquiry_update.html"
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        context_data["inquiry_labels"] = make_labels(Inquiry)
+
+        return context_data
+
+
+    def get_success_url(self):
+        if "popup" in self.kwargs:
+            return reverse(
+                "touglates:popup_closer",
+                kwargs={
+                    "pk": self.object.pk,
+                    "app_name": self.model._meta.app_label,
+                    "model_name": self.model.__name__,
+                },
+            )
+        return reverse_lazy(
+            "spl_discoveries:inquiry-detail", kwargs={"pk": self.object.pk}
+        )
+
+
+class InquiryDetail(PermissionRequiredMixin, DetailView):
+    permission_required = "spl_discoveries.view_inquiry"
+    model = Inquiry
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        context_data["inquiry_labels"] = make_labels(Inquiry)
+
+        return context_data
+
+
+class InquiryDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = "spl_discoveries.delete_inquiry"
+    model = Inquiry
+    success_url = reverse_lazy("spl_discoveries:inquiry-list")
+
+    def get_context_data(self, **kwargs):
+
+        context_data = super().get_context_data(**kwargs)
+        context_data["inquiry_labels"] = make_labels(Inquiry)
+        return context_data
+
+class InquiryList(PermissionRequiredMixin, FilterView):
+    permission_required = "spl_discoveries.view_inquiry"
+    filterset_class = InquiryFilter
+    filterstore_urlname = "spl_discoveries:inquiry-filterstore"
+    model=Inquiry
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        context_data["filterstore_retrieve"] = FilterstoreRetrieveForm()
+        context_data["filterstore_save"] = FilterstoreSaveForm()
+        context_data["count"] = self.object_list.count()
+        context_data["inquiry_labels"] = make_labels(Inquiry)
+        return context_data
+
+
+class InquiryClose(PermissionRequiredMixin, DetailView):
+    permission_required = "spl_discoveries.view_inquiry"
+    model = Inquiry
+    template_name = "spl_discoveries/inquiry_closer.html"
+

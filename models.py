@@ -210,3 +210,55 @@ class Customernote(models.Model):
         ordering = [
             "-when",
         ]
+
+class Inquiry(models.Model):
+
+    name_full = models.CharField(
+        "full name",
+        max_length=120,
+        help_text="Your full name",
+    )
+    name_prefered=models.CharField(
+        "prefered name",
+        max_length=30,
+        blank=True,
+        help_text="How you would like us to address you (ex: John, Jill, JT, Ms. Tiller )"
+    )
+    summary = models.CharField(
+        "request summary",
+        max_length=80,
+        help_text="A summary of the assistance you're requesting",
+    )
+    details = models.TextField(
+        "details",
+        help_text="Optionally, more details about your request request",
+    )
+    availability = models.CharField(
+        "availability",
+        max_length=255,
+        blank=True,
+        help_text="Please describe what days or times would work best for you.  You can be specific (June 1ST or 2nd at 11:00) or more general (Monday afternoons or Wednesday evenings)",
+    )
+    where_desired = models.ForeignKey(
+        Location,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        help_text="The scheduled location for the appointment",
+    )
+    when_submitted = models.DateField(
+        "date submitted",
+        default=date.today,
+        blank=True,
+        null=True,
+        help_text="The date and time that the customer submitted the request",
+    )
+
+    def __str__(self):
+        return "{}: {}: {}".format(
+            self.name_full, self.summary, self.when_submitted
+        )
+
+    class Meta:
+        ordering = ("when_submitted",)
+

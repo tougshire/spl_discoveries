@@ -1,0 +1,14 @@
+{% extends './_base.html' %}
+
+{% block content %}
+  {% include './inquiry_menu.html' %}
+  <h2>{{ object }}</h2>
+  {% include './inquiry_display_fields.html' %}
+  {% include './inquiry_menu.html' %}
+
+{% endblock %}
+{% block bottomscript %}
+{{ block.super }}
+{% endblock %}
+
+

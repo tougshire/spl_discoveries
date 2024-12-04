@@ -3,7 +3,7 @@ import django_filters
 
 from django_filters_stoex.filterset import StoexFilterSet
 from spl_members.models import Member as Staffmember
-from .models import Appointment, Customer
+from .models import Appointment, Customer, Inquiry
 from django.db import models
 from django import forms
 from django_filters_stoex.filters import CrossFieldSearchFilter
@@ -88,4 +88,23 @@ class CustomerFilter(StoexFilterSet):
 
     class Meta:
         model = Appointment
+        fields = []
+
+class InquiryFilter(StoexFilterSet):
+
+    combined_text_search = CrossFieldSearchFilter(
+        label="Text Search",
+        field_name="name_full,name_prefered,where_desired__name_full,where_desired__name_abbr",
+        lookup_expr="icontains",
+    )
+
+    orderbyfields = django_filters.OrderingFilter(
+        fields=(
+            "when_submitted",
+            "name_full",
+        ),
+    )
+
+    class Meta:
+        model = Inquiry
         fields = []

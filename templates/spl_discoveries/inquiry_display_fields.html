@@ -1,0 +1,21 @@
+<div class="detail">
+  <div class="detail">
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.title field=object.title %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.customer field=object.customer %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.where_scheduled field=object.where_scheduled %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.where_scheduleds_request field=object.where_scheduleds_request %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.when_submitted field=object.when_submitted %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.staffer field=object.staffer %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.when_scheduled field=object.when_scheduled %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.where_scheduled field=object.where_scheduled %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.status field=object.status %}
+
+  <h3>Notes</h3><span id="div_inquiryNotes">Showing All </span><a href="#" id="a_toggleNotes">Show Flagged</a>
+  {% for inquirynote in object.inquirynote_set.all %}
+    <div class="relatedset relatedinquirynote level{{ inquiryNote.inquirynotelevel }} {% if inquirynote.flagged %} flagged{% endif %}" id="div_inquirynote-{{ forloop.counter0 }}">
+      {% include 'touglates/list_fields.html' with field_1_label='Note:' field_1=inquirynote.when field_2=inquirynote.inquirynotecategory|default_if_none:'' field_3=inquirynote.maintext %}
+    </div>
+  {% endfor %}
+
+</div>
+

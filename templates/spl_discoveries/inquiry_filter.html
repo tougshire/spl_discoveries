@@ -1,0 +1,101 @@
+{% extends './_base.html' %}
+{% load static %}
+{% block content %}
+{% include './inquiry_menu.html' %}
+<div id = "div_search_form">
+  <table>
+    <form method="POST">
+      {% csrf_token %}
+      {{ filter.form.as_table }}
+      {{ as_csv.as_table }}
+      {{ filterstore_save.as_table }}
+      <tr><td> </td><td><input type="submit" /></td></tr>
+    </form>
+    <form method="GET" action="{% url 'spl_discoveries:inquiry-list' %}">
+      {{ filterstore_retrieve.as_table }}
+      <tr><td> </td><td><input type="submit" /></td></tr>
+    </form>
+  </table>
+</div>
+<div>
+  <a id="a_showhideSearchForm" href="#"></a>
+</div>
+
+<script>
+  function showhideSearchForm() {
+    var div_searchForm = document.getElementById("div_search_form")
+    if(div_searchForm.style.display=="none") {
+      div_searchForm.style.display="block"
+      a_showhideSearchForm.innerText="Hide Search Form"
+    } else {
+      div_searchForm.style.display="none"
+      a_showhideSearchForm.innerText="Show Search Form"
+    }
+  }
+  var a_showhideSearchForm = document.getElementById("a_showhideSearchForm")
+  a_showhideSearchForm.addEventListener("click", function(e) {
+    e.preventDefault()
+    showhideSearchForm()
+  })
+  showhideSearchForm()
+</script>
+<div class="list">
+    <div><a href="{% url 'spl_discoveries:inquiry-create' %}">create</a></div>
+      <div class="row rowhead">
+        {% include 'touglates/list_head.html' with field='' %}
+        {% if 'title' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.title %}
+        {% endif %}
+        {% if 'customer' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.customer %}
+        {% endif %}
+        {% if 'when_submitted' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.when_submitted %}
+        {% endif %}
+        {% if 'staffer' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.staffer %}
+        {% endif %}
+        {% if 'where_scheduled' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.where_scheduled %}
+        {% endif %}
+        {% if 'status' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.status %}
+        {% endif %}
+
+      </div>
+
+      {% for inquiry in filter.qs %}
+        <div class="row">
+          <div class="listfield"><a href="{% url 'spl_discoveries:inquiry-detail' inquiry.pk %}">view</a></div>
+          <div class="listfield"><a href="{% url 'spl_discoveries:inquiry-update' inquiry.pk %}">edit</a></div>
+          {% if 'title' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.title %}
+          {% endif %}
+          {% if 'customer' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.customer %}
+          {% endif %}
+          {% if 'when_submitted' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.when_submitted %}
+          {% endif %}
+          {% if 'staffer' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.staffer %}
+          {% endif %}
+          {% if 'where_scheduled' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.where_scheduled %}
+          {% endif %}
+          {% if 'status' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.status %}
+          {% endif %}
+
+        </div>
+      {% endfor %}
+      <div>Count: {{ count }}</div>
+
+    </div>
+  </div>
+  {% include './inquiry_menu.html' %}
+  {% endblock %}
+  {% block bottomscript %}
+    {{ block.super }}
+
+  {% endblock %}

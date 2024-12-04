@@ -1,0 +1,49 @@
+<div class="form">
+  {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+  {% for message in messages %} {{ message }} {% endfor %}
+  <p style="font-weight:bold"><bold>There may be some fields on this form that are not meant to be filled in.  A person should be able to determine which fields these are.  Please leave them blank.</bold></p>
+  <form id="form_inquiry" method="POST">
+    {{ form.media }}
+    {% csrf_token %}
+
+      <div id="div_name_full">
+        {% include 'touglates/form_field.html' with field=form.name_full %}
+      </div>
+      <div id="div_name_prefered">
+        {% include 'touglates/form_field.html' with field=form.name_prefered %}
+      </div>
+      <div id="div_summary">
+        {% include 'touglates/form_field.html' with field=form.summary %}
+      </div>
+      <div id="div_details">
+        {% include 'touglates/form_field.html' with field=form.details %}
+      </div>
+      <div id="div_availability">
+        {% include 'touglates/form_field.html' with field=form.availability %}
+      </div>
+      <div id="div_where_desired">
+        {% include 'touglates/form_field.html' with field=form.where_desired %}
+      </div>
+      <div id="div_when_submitted">
+        {% include 'touglates/form_field.html' with field=form.when_submitted %}
+      </div>
+      <div id="div_where_scheduled">
+        {% include 'touglates/form_field.html' with field=form.where_scheduled %}
+      </div>
+      <div id="div_honeypota">
+        {% include 'touglates/form_field.html' with field=form.honeypota %}
+      </div>
+      <div id="div_honeypotb">
+        {% include 'touglates/form_field.html' with field=form.honeypotb %}
+      </div>
+
+      <button type="Submit">Submit</button>
+
+    </div>
+
+  </form>
+
+
+
+
+

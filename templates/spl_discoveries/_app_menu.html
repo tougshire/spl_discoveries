@@ -11,5 +11,16 @@
       </div>
     {% endif %}
   {% endif %}
+  {% if perms.spl_discoveries.view_inquiry %}
+    {% if 'inquiry-' in request.resolver_match.url_name %}
+      <div class="menu-inquiry menu-here">
+        <a href="{% url 'spl_discoveries:inquiry-list' %}">Inquirys</a>
+      </div>
+    {% else %}
+      <div class="menu-inquiry">
+        <a href="{% url 'spl_discoveries:inquiry-list' %}">Inquirys</a>
+      </div>
+    {% endif %}
+  {% endif %}
 
 </div>

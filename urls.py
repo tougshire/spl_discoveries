@@ -50,6 +50,45 @@ urlpatterns = [
         name="appointment-copied",
     ),
     path(
+        "inquiry/",
+        RedirectView.as_view(url=reverse_lazy("spl_discoveries:inquiry-list")),
+    ),
+    path(
+        "inquiry/create/",
+        views.InquiryCreate.as_view(),
+        name="inquiry-create",
+    ),
+    path(
+        "inquiry/<int:pk>/update/",
+        views.InquiryUpdate.as_view(),
+        name="inquiry-update",
+    ),
+    path(
+        "inquiry/<int:pk>/detail/",
+        views.InquiryDetail.as_view(),
+        name="inquiry-detail",
+    ),
+    path(
+        "inquiry/<int:pk>/delete/",
+        views.InquiryDelete.as_view(),
+        name="inquiry-delete",
+    ),
+    path(
+        "inquiry/list/filterstore/<int:from_store>/",
+        views.InquiryList.as_view(),
+        name="inquiry-filterstore",
+    ),
+    path(
+        "inquiry/list/",
+        views.InquiryList.as_view(),
+        name="inquiry-list",
+    ),
+    path(
+        "inquiry/<str:copied_from>/copied/",
+        views.InquiryList.as_view(),
+        name="inquiry-copied",
+    ),
+    path(
         "customer/",
         RedirectView.as_view(url=reverse_lazy("spl_discoveries:customer-list")),
     ),

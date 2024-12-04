@@ -1,6 +1,6 @@
 <div class="form">
-  {{ form.errors }}
-  {{ appointmentnotes.errors }}
+  {% if form.errors %}{{ form.errors }}{% endif %}
+  {% if appointmentnotes.errors %}{{ appointmentnotes.errors }}{% endif %}
   {% for message in messages %} {{ message }} {% endfor %}
   <form id="form_appointment" method="POST">
   {{ form.media }}
@@ -18,7 +18,6 @@
       <div id="div_customers_availability">
         {% include 'touglates/form_field.html' with field=form.customers_availability %}
       </div>
-
       <div id="div_when_submitted">
         {% include 'touglates/form_field.html' with field=form.when_submitted %}
       </div>
