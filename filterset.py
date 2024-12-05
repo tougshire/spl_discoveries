@@ -39,7 +39,8 @@ class AppointmentFilter(StoexFilterSet):
 
     orderbyfields = django_filters.OrderingFilter(
         fields=(
-            "when_submitted",
+            "date_submitted",
+            "when_scheduled",
             "status",
             "customer",
             "staffer",
@@ -100,7 +101,7 @@ class InquiryFilter(StoexFilterSet):
 
     orderbyfields = django_filters.OrderingFilter(
         fields=(
-            "when_submitted",
+            "date_submitted",
             "name_full",
         ),
     )

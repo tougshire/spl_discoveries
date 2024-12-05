@@ -49,8 +49,8 @@
         {% if 'customer' in show_columns or not show_columns %}
           {% include 'touglates/list_head.html' with field=appointment_labels.customer %}
         {% endif %}
-        {% if 'when_submitted' in show_columns or not show_columns %}
-          {% include 'touglates/list_head.html' with field=appointment_labels.when_submitted %}
+        {% if 'date_submitted' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=appointment_labels.date_submitted %}
         {% endif %}
         {% if 'staffer' in show_columns or not show_columns %}
           {% include 'touglates/list_head.html' with field=appointment_labels.staffer %}
@@ -74,8 +74,8 @@
           {% if 'customer' in show_columns or not show_columns %}
             {% include 'touglates/list_field.html' with field=appointment.customer %}
           {% endif %}
-          {% if 'when_submitted' in show_columns or not show_columns %}
-            {% include 'touglates/list_field.html' with field=appointment.when_submitted %}
+          {% if 'date_submitted' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=appointment.date_submitted %}
           {% endif %}
           {% if 'staffer' in show_columns or not show_columns %}
             {% include 'touglates/list_field.html' with field=appointment.staffer %}

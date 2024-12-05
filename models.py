@@ -78,11 +78,11 @@ class Appointment(models.Model):
         max_length=255,
         help_text="A summary of the customer's request",
     )
-    when_submitted = models.DateField(
+    date_submitted = models.DateField(
         "date submitted",
         blank=True,
         null=True,
-        help_text="The date and time that the customer submitted the request",
+        help_text="The date that the customer submitted the request",
     )
     staffer = models.ForeignKey(
         Staffmember,
@@ -126,7 +126,6 @@ class Appointment(models.Model):
     )
 
     def __str__(self):
-        ordering = self.when_submitted
         if self.title:
             return self.title
         else:
@@ -135,7 +134,7 @@ class Appointment(models.Model):
             )
 
     class Meta:
-        ordering = ("when_submitted",)
+        ordering = ('when_scheduled', 'date_submitted')
 
 
 class Appointmentnote(models.Model):
@@ -246,19 +245,19 @@ class Inquiry(models.Model):
         on_delete=models.SET_NULL,
         help_text="The scheduled location for the appointment",
     )
-    when_submitted = models.DateField(
+    date_submitted = models.DateField(
         "date submitted",
         default=date.today,
         blank=True,
         null=True,
-        help_text="The date and time that the customer submitted the request",
+        help_text="The date that the customer submitted the request",
     )
 
     def __str__(self):
         return "{}: {}: {}".format(
-            self.name_full, self.summary, self.when_submitted
+            self.name_full, self.summary, self.date_submitted
         )
 
     class Meta:
-        ordering = ("when_submitted",)
+        ordering = ("date_submitted",)
 

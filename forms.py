@@ -27,7 +27,7 @@ class AppointmentForm(forms.ModelForm):
             "customer",
             "request_summary",
             "customers_availability",
-            "when_submitted",
+            "date_submitted",
             "staffer",
             "when_scheduled",
             "where_scheduled",
@@ -48,7 +48,7 @@ class AppointmentForm(forms.ModelForm):
                     "add_url": reverse_lazy("spl_discoveries:staffer-popup"),
                 },
             ),
-            "when_submitted": AdminDateWidget(),
+            "date_submitted": AdminDateWidget(),
             "when_scheduled": AdminDateWidget(),
         }
 
