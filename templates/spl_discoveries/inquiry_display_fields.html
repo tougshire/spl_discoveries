@@ -1,14 +1,12 @@
 <div class="detail">
   <div class="detail">
-  {% include 'touglates/detail_field.html' with label=inquiry_labels.title field=object.title %}
-  {% include 'touglates/detail_field.html' with label=inquiry_labels.customer field=object.customer %}
-  {% include 'touglates/detail_field.html' with label=inquiry_labels.where_scheduled field=object.where_scheduled %}
-  {% include 'touglates/detail_field.html' with label=inquiry_labels.where_scheduleds_request field=object.where_scheduleds_request %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.name_full field=object.name_full %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.name_prefered field=object.name_prefered %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.summary field=object.summary %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.details field=object.details %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.availability field=object.availability %}
+  {% include 'touglates/detail_field.html' with label=inquiry_labels.where_desired field=object.where_desired %}
   {% include 'touglates/detail_field.html' with label=inquiry_labels.date_submitted field=object.date_submitted %}
-  {% include 'touglates/detail_field.html' with label=inquiry_labels.staffer field=object.staffer %}
-  {% include 'touglates/detail_field.html' with label=inquiry_labels.when_scheduled field=object.when_scheduled %}
-  {% include 'touglates/detail_field.html' with label=inquiry_labels.where_scheduled field=object.where_scheduled %}
-  {% include 'touglates/detail_field.html' with label=inquiry_labels.status field=object.status %}
 
   <h3>Notes</h3><span id="div_inquiryNotes">Showing All </span><a href="#" id="a_toggleNotes">Show Flagged</a>
   {% for inquirynote in object.inquirynote_set.all %}

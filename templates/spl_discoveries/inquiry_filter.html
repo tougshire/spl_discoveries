@@ -43,23 +43,23 @@
     <div><a href="{% url 'spl_discoveries:inquiry-create' %}">create</a></div>
       <div class="row rowhead">
         {% include 'touglates/list_head.html' with field='' %}
-        {% if 'title' in show_columns or not show_columns %}
-          {% include 'touglates/list_head.html' with field=inquiry_labels.title %}
+        {% if 'name_full' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.name_full %}
         {% endif %}
-        {% if 'customer' in show_columns or not show_columns %}
-          {% include 'touglates/list_head.html' with field=inquiry_labels.customer %}
+        {% if 'name_prefered' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.name_prefered %}
+        {% endif %}
+        {% if 'summary' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.summary %}
+        {% endif %}
+        {% if 'availability' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.availability %}
+        {% endif %}
+        {% if 'where_desired' in show_columns or not show_columns %}
+          {% include 'touglates/list_head.html' with field=inquiry_labels.where_desired %}
         {% endif %}
         {% if 'date_submitted' in show_columns or not show_columns %}
           {% include 'touglates/list_head.html' with field=inquiry_labels.date_submitted %}
-        {% endif %}
-        {% if 'staffer' in show_columns or not show_columns %}
-          {% include 'touglates/list_head.html' with field=inquiry_labels.staffer %}
-        {% endif %}
-        {% if 'where_scheduled' in show_columns or not show_columns %}
-          {% include 'touglates/list_head.html' with field=inquiry_labels.where_scheduled %}
-        {% endif %}
-        {% if 'status' in show_columns or not show_columns %}
-          {% include 'touglates/list_head.html' with field=inquiry_labels.status %}
         {% endif %}
 
       </div>
@@ -68,23 +68,23 @@
         <div class="row">
           <div class="listfield"><a href="{% url 'spl_discoveries:inquiry-detail' inquiry.pk %}">view</a></div>
           <div class="listfield"><a href="{% url 'spl_discoveries:inquiry-update' inquiry.pk %}">edit</a></div>
-          {% if 'title' in show_columns or not show_columns %}
-            {% include 'touglates/list_field.html' with field=inquiry.title %}
+          {% if 'name_full' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.name_full %}
           {% endif %}
-          {% if 'customer' in show_columns or not show_columns %}
-            {% include 'touglates/list_field.html' with field=inquiry.customer %}
+          {% if 'name_prefered' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.name_prefered %}
+          {% endif %}
+          {% if 'summary' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.summary %}
+          {% endif %}
+          {% if 'availability' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.availability %}
+          {% endif %}
+          {% if 'where_desired' in show_columns or not show_columns %}
+            {% include 'touglates/list_field.html' with field=inquiry.where_desired %}
           {% endif %}
           {% if 'date_submitted' in show_columns or not show_columns %}
             {% include 'touglates/list_field.html' with field=inquiry.date_submitted %}
-          {% endif %}
-          {% if 'staffer' in show_columns or not show_columns %}
-            {% include 'touglates/list_field.html' with field=inquiry.staffer %}
-          {% endif %}
-          {% if 'where_scheduled' in show_columns or not show_columns %}
-            {% include 'touglates/list_field.html' with field=inquiry.where_scheduled %}
-          {% endif %}
-          {% if 'status' in show_columns or not show_columns %}
-            {% include 'touglates/list_field.html' with field=inquiry.status %}
           {% endif %}
 
         </div>
